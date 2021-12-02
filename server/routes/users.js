@@ -41,6 +41,15 @@ router.post('/register', (req, res) => {
   })
 })
 
+//GET api /profile
+router.get('/profile', (req, res) => {
+  const email = req.query.email
+  // console.log('email', email)
+  User.findOne({ email }).then((user) => {
+    res.status(200).json(user)
+  })
+})
+
 // POST api /login
 router.post('/login', (req, res) => {
   // Form validation
@@ -93,5 +102,18 @@ router.post('/login', (req, res) => {
     })
   })
 })
+
+// GET api to get users /profile
+// router.get('/profile', async (req, res) => {
+//   try {
+//     const email = req.body.email
+//     console.log(req.params)
+//     const users = await User.find({ })
+//     res.json(users)
+//   } catch (error) {
+//     console.error(error.message)
+//     res.status(500).send('Internal Server Error')
+//   }
+// })
 
 module.exports = router

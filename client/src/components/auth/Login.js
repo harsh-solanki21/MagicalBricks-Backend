@@ -26,6 +26,8 @@ const Login = () => {
       }),
     })
     if (response?.status === 200) {
+      localStorage.setItem('UserId', email)
+      // localStorage.setItem('accessToken', e.data.accessToken)
       navigate('/')
     } else {
       const data = await response.json()

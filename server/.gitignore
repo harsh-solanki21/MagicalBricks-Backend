@@ -1,3 +1,7 @@
 # dependencies
 /node_modules
+<<<<<<< HEAD
 /config.env
+=======
+/config.env
+>>>>>>> ce67677651e12b6f5c5e887f58ac5807e692ec39

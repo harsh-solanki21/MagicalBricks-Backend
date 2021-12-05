@@ -1,57 +1,71 @@
-export default function validateInfo(values) {
+export default function validateInfo(
+  name,
+  email,
+  phone,
+  totalPrice,
+  sqftPrice,
+  bhk,
+  carpetArea,
+  category,
+  description,
+  location,
+  city,
+  state,
+  multipleFiles
+) {
   let errors = {}
 
-  if (!values.name.trim()) {
+  if (!name.trim()) {
     errors.name = 'Name Required'
   }
 
-  if (!values.email) {
+  if (!email) {
     errors.email = 'Email Required'
   }
 
-  if (!values.images) {
-    errors.images = 'Atleast one image is required'
+  if (multipleFiles.length === 0) {
+    errors.images = 'At least one image is Required'
   }
 
-  if (!values.totalPrice) {
+  if (!totalPrice) {
     errors.totalPrice = 'Total Price is Required'
   }
 
-  if (!values.sqftPrice) {
+  if (!sqftPrice) {
     errors.sqftPrice = 'sq.ft price is Required'
   }
 
-  if (!values.bhk) {
+  if (!bhk) {
     errors.bhk = 'Flat Size is Required'
   }
 
-  if (!values.carpetArea) {
+  if (!carpetArea) {
     errors.carpetArea = 'Carpet Area is Required'
   }
 
-  if (!values.category) {
+  if (!category) {
     errors.category = 'Category is Required'
   }
 
-  if (!values.description) {
+  if (!description) {
     errors.description = 'Description is Required'
   }
 
-  if (!values.location) {
+  if (!location) {
     errors.location = 'Location is Required'
   }
 
-  if (!values.city) {
+  if (!city) {
     errors.city = 'City is Required'
   }
 
-  if (!values.state) {
+  if (!state) {
     errors.state = 'State is Required'
   }
 
-  if (!values.phone) {
+  if (!phone) {
     errors.phone = 'Number is Required'
-  } else if (values.phone.length !== 10) {
+  } else if (phone.length !== 10) {
     errors.phone = 'Invalid Number'
   }
   return errors

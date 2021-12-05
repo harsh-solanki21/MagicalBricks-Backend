@@ -96,24 +96,10 @@ router.post('/login', (req, res) => {
           }
         )
       } else {
-        // return res.status(400).json({ passwordincorrect: 'Password incorrect' })
         return res.status(404).json({ password: 'Incorrect Password' })
       }
     })
   })
 })
-
-// GET api to get users /profile
-// router.get('/profile', async (req, res) => {
-//   try {
-//     const email = req.body.email
-//     console.log(req.params)
-//     const users = await User.find({ })
-//     res.json(users)
-//   } catch (error) {
-//     console.error(error.message)
-//     res.status(500).send('Internal Server Error')
-//   }
-// })
 
 module.exports = router

@@ -17,6 +17,7 @@ const multipleFileUpload = async (req, res, next) => {
       email: req.body.email,
       phone: req.body.phone,
       files: filesArray,
+      // images: req.body.images,
       totalPrice: req.body.totalPrice,
       sqftPrice: req.body.sqftPrice,
       bhk: req.body.bhk,

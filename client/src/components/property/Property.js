@@ -3,73 +3,68 @@ import { useNavigate } from 'react-router-dom'
 import { multipleFilesUpload } from './api'
 import validate from './validate'
 
-const Form = (props) => {
+const Form = () => {
   const navigate = useNavigate()
 
-  const [values, setValues] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    images: '',
-    totalPrice: '',
-    sqftPrice: '',
-    bhk: '',
-    carpetArea: '',
-    category: '',
-    description: '',
-    location: '',
-    city: '',
-    state: '',
-  })
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [totalPrice, setTotalPrice] = useState('')
+  const [sqftPrice, setSqftPrice] = useState('')
+  const [bhk, setBhk] = useState('')
+  const [carpetArea, setCarpetArea] = useState('')
+  const [category, setCategory] = useState('')
+  const [description, setDescription] = useState('')
+  const [location, setLocation] = useState('')
+  const [city, setCity] = useState('')
+  const [state, setState] = useState('')
+  const [multipleFiles, setMultipleFiles] = useState('')
+
   const [errors, setErrors] = useState({})
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setValues({
-      ...values,
-      [name]: value,
-    })
-  }
-
-  // const UploadMultipleFiles = async () => {
-  //   const formData = new FormData()
-  //   formData.append('name', name)
-  //   formData.append('email', email)
-  //   formData.append('phone', phone)
-  //   formData.append('totalPrice', totalPrice)
-  //   formData.append('sqftPrice', sqftPrice)
-  //   formData.append('bhk', bhk)
-  //   formData.append('carpetArea', carpetArea)
-  //   formData.append('category', category)
-  //   formData.append('description', description)
-  //   formData.append('location', location)
-  //   formData.append('city', city)
-  //   formData.append('state', state)
-  //   for (let i = 0; i < multipleFiles.length; i++) {
-  //     formData.append('images', multipleFiles[i])
-  //   }
-  //   await multipleFilesUpload(formData, mulitpleFileOptions)
-  //   props.getMultiple()
-  // }
-
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setErrors(validate(values))
-    setIsSubmitting(true)
+    setErrors(
+      validate(
+        name,
+        email,
+        phone,
+        totalPrice,
+        sqftPrice,
+        bhk,
+        carpetArea,
+        category,
+        description,
+        location,
+        city,
+        state,
+        multipleFiles
+      )
+    )
 
     const formData = new FormData()
-    formData.append('values', values) // problem might be here
-    for (let i = 0; i < values.length; i++) {
-      formData.append('images', values[i])
+    formData.append('name', name)
+    formData.append('email', email)
+    formData.append('phone', phone)
+    formData.append('totalPrice', totalPrice)
+    formData.append('sqftPrice', sqftPrice)
+    formData.append('bhk', bhk)
+    formData.append('carpetArea', carpetArea)
+    formData.append('category', category)
+    formData.append('description', description)
+    formData.append('location', location)
+    formData.append('city', city)
+    formData.append('state', state)
+    for (let i = 0; i < multipleFiles.length; i++) {
+      formData.append('files', multipleFiles[i])
     }
     await multipleFilesUpload(formData)
-    props.getMultiple()
+
+    setIsSubmitting(true)
   }
 
   useEffect(() => {
-    console.log(Object.keys(errors).length)
-    console.log(isSubmitting)
     if (Object.keys(errors).length === 0 && isSubmitting) {
       navigate('/')
     }
@@ -86,8 +81,7 @@ const Form = (props) => {
               type='text'
               name='name'
               placeholder='Enter Your Name'
-              value={values.name}
-              onChange={handleChange}
+              onChange={(e) => setName(e.target.value)}
             />
             {errors.name && <li>{errors.name}</li>}
           </div>
@@ -97,8 +91,7 @@ const Form = (props) => {
               type='email'
               name='email'
               placeholder='Enter Email'
-              value={values.email}
-              onChange={handleChange}
+              onChange={(e) => setEmail(e.target.value)}
             />
             {errors.email && <li>{errors.email}</li>}
           </div>
@@ -108,8 +101,7 @@ const Form = (props) => {
               type='tel'
               name='phone'
               placeholder='Phone'
-              value={values.phone}
-              onChange={handleChange}
+              onChange={(e) => setPhone(e.target.value)}
             />
             {errors.phone && <li>{errors.phone}</li>}
           </div>
@@ -120,8 +112,7 @@ const Form = (props) => {
               name='images'
               accept='.jpg,.jpeg,.png'
               placeholder='Upload Images'
-              value={values.images}
-              onChange={handleChange}
+              onChange={(e) => setMultipleFiles(e.target.files)}
               multiple
             />
             {errors.images && <li>{errors.images}</li>}
@@ -132,8 +123,7 @@ const Form = (props) => {
               type='text'
               name='totalPrice'
               placeholder='Total Price of Property'
-              value={values.totalPrice}
-              onChange={handleChange}
+              onChange={(e) => setTotalPrice(e.target.value)}
             />
             {errors.totalPrice && <li>{errors.totalPrice}</li>}
           </div>
@@ -143,8 +133,7 @@ const Form = (props) => {
               type='text'
               name='sqftPrice'
               placeholder='Price per sq.ft of property'
-              value={values.sqftPrice}
-              onChange={handleChange}
+              onChange={(e) => setSqftPrice(e.target.value)}
             />
             {errors.sqftPrice && <li>{errors.sqftPrice}</li>}
           </div>
@@ -154,19 +143,17 @@ const Form = (props) => {
               type='number'
               name='bhk'
               placeholder='Enter BHKs'
-              value={values.bhk}
-              onChange={handleChange}
+              onChange={(e) => setBhk(e.target.value)}
             />
             {errors.bhk && <li>{errors.bhk}</li>}
           </div>
           <div>
-            <label htmlFor='name'>Carpet Area</label>
+            <label htmlFor='carpetArea'>Carpet Area</label>
             <input
               type='number'
               name='carpetArea'
               placeholder='Enter Carpet Area'
-              value={values.carpetArea}
-              onChange={handleChange}
+              onChange={(e) => setCarpetArea(e.target.value)}
             />
             {errors.carpetArea && <li>{errors.carpetArea}</li>}
           </div>
@@ -175,7 +162,7 @@ const Form = (props) => {
             <select
               defaultValue={'DEFAULT'}
               name='category'
-              onChange={handleChange}
+              onChange={(e) => setCategory(e.target.value)}
             >
               <option value='DEFAULT' disabled>
                 Select Category
@@ -195,11 +182,8 @@ const Form = (props) => {
               cols='100'
               maxLength='1000'
               placeholder='Enter Description about the property'
-              value={values.description}
-              onChange={handleChange}
-            >
-              A nice day is a nice day. Lao Tseu
-            </textarea>
+              onChange={(e) => setDescription(e.target.value)}
+            ></textarea>
             {errors.description && <li>{errors.description}</li>}
           </div>
           <div>
@@ -208,8 +192,7 @@ const Form = (props) => {
               type='text'
               name='location'
               placeholder='Street'
-              value={values.location}
-              onChange={handleChange}
+              onChange={(e) => setLocation(e.target.value)}
             />
             {errors.location && <li>{errors.location}</li>}
           </div>
@@ -219,8 +202,7 @@ const Form = (props) => {
               type='text'
               name='city'
               placeholder='City'
-              value={values.city}
-              onChange={handleChange}
+              onChange={(e) => setCity(e.target.value)}
             />
             {errors.city && <li>{errors.city}</li>}
           </div>
@@ -230,8 +212,7 @@ const Form = (props) => {
               type='text'
               name='state'
               placeholder='State'
-              value={values.state}
-              onChange={handleChange}
+              onChange={(e) => setState(e.target.value)}
             />
             {errors.state && <li>{errors.state}</li>}
           </div>

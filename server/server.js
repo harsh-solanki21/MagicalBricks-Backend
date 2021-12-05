@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const path = require('path')
 const connectToMongo = require('./db')
 const passport = require('passport')
 require('dotenv').config({ path: './config.env' })
@@ -30,6 +31,8 @@ require('./config/passport')(passport)
 
 // Routes
 app.use('/', users)
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 app.use('/', properties.routes)
 
 app.listen(port, () => {

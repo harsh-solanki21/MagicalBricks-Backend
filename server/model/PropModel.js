@@ -9,16 +9,11 @@ const Property = new Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
   },
   phone: {
     type: Number,
     required: true,
   },
-  // images: {
-  //   type: String,
-  //   required: true,
-  // },
   files: [Object],
   totalPrice: {
     type: String,

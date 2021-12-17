@@ -17,7 +17,6 @@ const multipleFileUpload = async (req, res, next) => {
       email: req.body.email,
       phone: req.body.phone,
       files: filesArray,
-      // images: req.body.images,
       totalPrice: req.body.totalPrice,
       sqftPrice: req.body.sqftPrice,
       bhk: req.body.bhk,
@@ -30,6 +29,51 @@ const multipleFileUpload = async (req, res, next) => {
     })
     await multipleFiles.save()
     res.status(201).send('Files Uploaded Successfully')
+  } catch (error) {
+    res.status(400).send(error.message)
+  }
+}
+
+const getAllProperty = async (req, res, next) => {
+  try {
+    const files = await MultipleFile.find()
+    res.status(200).send(files)
+  } catch (error) {
+    res.status(400).send(error.message)
+  }
+}
+
+const getRental = async (req, res, next) => {
+  try {
+    const files = await MultipleFile.find({ category: 'Rental' })
+    res.status(200).send(files)
+  } catch (error) {
+    res.status(400).send(error.message)
+  }
+}
+
+const getBuy = async (req, res, next) => {
+  try {
+    const files = await MultipleFile.find({ category: 'Buy' })
+    res.status(200).send(files)
+  } catch (error) {
+    res.status(400).send(error.message)
+  }
+}
+
+const getReadyToMoveIn = async (req, res, next) => {
+  try {
+    const files = await MultipleFile.find({ category: 'Ready to move-in' })
+    res.status(200).send(files)
+  } catch (error) {
+    res.status(400).send(error.message)
+  }
+}
+
+const getTopProjects = async (req, res, next) => {
+  try {
+    const files = await MultipleFile.find({ category: 'Top Projects' })
+    res.status(200).send(files)
   } catch (error) {
     res.status(400).send(error.message)
   }
@@ -49,4 +93,9 @@ const fileSizeFormatter = (bytes, decimal) => {
 
 module.exports = {
   multipleFileUpload,
+  getAllProperty,
+  getRental,
+  getBuy,
+  getReadyToMoveIn,
+  getTopProjects,
 }

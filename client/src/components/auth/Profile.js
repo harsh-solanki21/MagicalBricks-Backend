@@ -5,7 +5,7 @@ const Profile = () => {
   const [profile, setProfile] = useState([])
   useEffect(async () => {
     const email = localStorage.getItem('UserId')
-    const rep = await axios.get('http://localhost:5000/profile', {
+    const rep = await axios.get('http://127.0.0.1:5000/profile', {
       params: {
         email,
       },
@@ -16,8 +16,9 @@ const Profile = () => {
 
   return (
     <>
-      <h1>Home</h1>
-      {<div>{profile.name}</div>}
+      <h1>Profile</h1>
+      <div>{profile.name}</div>
+      <div>{profile.email}</div>
     </>
   )
 }

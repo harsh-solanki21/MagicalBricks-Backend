@@ -54,3 +54,12 @@ export const getTopProjects = async () => {
     throw error
   }
 }
+
+export const getProfile = async () => {
+  try {
+    const { data } = await axios.get(apiUrl + 'profile')
+    return data
+  } catch (error) {
+    throw error
+  }
+}

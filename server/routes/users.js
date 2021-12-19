@@ -3,6 +3,7 @@ const router = express.Router()
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const User = require('../model/UserModel')
+const Prop = require('../model/PropModel')
 const validateRegisterInput = require('../validation/signupValidate')
 const validateLoginInput = require('../validation/loginValidate')
 
@@ -38,15 +39,6 @@ router.post('/register', (req, res) => {
         })
       })
     }
-  })
-})
-
-//GET api /profile
-router.get('/profile', (req, res) => {
-  const email = req.query.email
-  // console.log('email', email)
-  User.findOne({ email }).then((user) => {
-    res.status(200).json(user)
   })
 })
 
@@ -100,6 +92,32 @@ router.post('/login', (req, res) => {
       }
     })
   })
+})
+
+//GET api /profile
+router.get('/profile', async (req, res) => {
+  const localEmail = req.query.email // not working
+  const files = await Prop.find()
+  res.status(200).send(files)
+})
+
+router.delete('/profile/:id', async (req, res) => {
+  try {
+    let owner = await Prop.findById(req.params.id)
+    // if (!owner) {
+    //   return res.status(404).send('Not Found')
+    // }
+    // // Allow deletion only if the user owns this property
+    // if (owner.user.toString() !== req.user.id) {
+    //   return res.status(401).send('Not Allowed')
+    // }
+
+    owner = await Prop.findByIdAndDelete(req.params.id)
+    res.json({ Success: 'Property has been deleted' })
+  } catch (error) {
+    console.error(error.message)
+    res.status(500).send('Internal Server Error')
+  }
 })
 
 module.exports = router
